@@ -1,0 +1,757 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={seminar\_02.10.R},
+            pdfauthor={j.smolkina},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{seminar\_02.10.R}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{j.smolkina}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{2021-10-02}
+
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# seminar 02.10}
+\FunctionTok{getwd}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "C:/Users/j.smolkina/OneDrive - CRITEO/Desktop/HSE/R/class4"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{setwd}\NormalTok{(}\StringTok{\textquotesingle{}C:/Users/j.smolkina/OneDrive {-} CRITEO/Desktop/HSE/R/class4\textquotesingle{}}\NormalTok{)}
+\FunctionTok{getwd}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "C:/Users/j.smolkina/OneDrive - CRITEO/Desktop/HSE/R/class4"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d}\OtherTok{=}\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{surname=}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}T\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}F\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}G\textquotesingle{}}\NormalTok{),}
+            \AttributeTok{age =} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{50}\NormalTok{),}
+            \AttributeTok{sex =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}f\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}f\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}m\textquotesingle{}}\NormalTok{),}\AttributeTok{check.names =}\NormalTok{ F)}
+\FunctionTok{rownames}\NormalTok{(d) }\OtherTok{=}\NormalTok{ d}\SpecialCharTok{$}\NormalTok{surname}
+\NormalTok{d}\SpecialCharTok{$}\NormalTok{surname }\OtherTok{=} \ConstantTok{NULL}
+\NormalTok{d}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   age sex
+## T  10   f
+## F  20   f
+## G  50   m
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d[}\StringTok{\textquotesingle{}F\textquotesingle{}}\NormalTok{,] }\CommentTok{\# разрешает частичные совпадения}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   age sex
+## F  20   f
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d[}\FunctionTok{rownames}\NormalTok{(d)}\SpecialCharTok{==}\StringTok{\textquotesingle{}F\textquotesingle{}}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   age sex
+## F  20   f
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d[d}\SpecialCharTok{$}\NormalTok{sex}\SpecialCharTok{==}\StringTok{\textquotesingle{}m\textquotesingle{}}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   age sex
+## G  50   m
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d}\SpecialCharTok{$}\StringTok{\textquotesingle{}sex\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] f f m
+## Levels: f m
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d[,}\DecValTok{2}\NormalTok{,drop}\OtherTok{=}\NormalTok{F]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   sex
+## T   f
+## F   f
+## G   m
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rnorm}\NormalTok{(}\DecValTok{5}\SpecialCharTok{*}\DecValTok{24}\NormalTok{,}\FloatTok{36.6}\NormalTok{,}\AttributeTok{sd=}\DecValTok{10}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{5}\NormalTok{)}
+\FunctionTok{which}\NormalTok{(d[}\DecValTok{2}\NormalTok{,]}\SpecialCharTok{\textgreater{}}\DecValTok{40}\NormalTok{) }\CommentTok{\# возращает индекс в векторе где true}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  4  5 11 14 15 18 20 21 22
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v }\OtherTok{=} \FunctionTok{runif}\NormalTok{(}\DecValTok{100}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\NormalTok{v[}\FunctionTok{sin}\NormalTok{(v)}\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 0.38601769 1.23842150 1.97911361 0.45407397 2.72897376 0.19120691
+##  [7] 2.45150437 2.02487834 0.61419554 0.15291467 2.15157481 1.78211037
+## [13] 2.44150225 0.24394082 1.39089181 0.88481896 2.65423332 2.76140965
+## [19] 2.44656468 2.04033948 2.34857362 1.19963714 0.48407006 0.99827877
+## [25] 2.00984845 0.62791824 2.58857829 2.40012350 0.60162364 1.68860013
+## [31] 2.52921701 1.81374590 2.24314125 2.96660799 0.61428045 2.11666010
+## [37] 0.57910409 0.04428254 1.88808688 1.50068686 0.71467989 2.09331315
+## [43] 1.03306830 0.73747174 2.34755348 2.31378704 1.48498286 0.37783005
+## [49] 1.56920370 2.95618358 0.23471882 2.96248675 0.65895173 2.28342113
+## [55] 2.60151313 2.56135270 0.65197439 1.92880890 0.41992524 1.77402672
+## [61] 1.25956301 1.92415120 0.04777329 1.45986160 1.85010517 0.04004220
+## [67] 2.70956269 1.98793669 2.62017312 1.41099761 1.65812637 2.75492940
+## [73] 0.03904666
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(v,}\AttributeTok{ncol=}\DecValTok{10}\NormalTok{)}
+\NormalTok{m[m[,}\DecValTok{6}\NormalTok{]}\SpecialCharTok{\textgreater{}}\DecValTok{1}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           [,1]       [,2]     [,3]      [,4]       [,5]     [,6]
+## [1,] -0.578349  2.4515044 2.441502 1.1996371 -0.1047274 2.116660
+## [2,]  1.979114 -0.4104191 0.884819 2.0098484  1.8137459 1.888087
+## [3,]  0.454074 -0.8976461 2.654233 0.6279182  2.2431413 1.500687
+##            [,7]       [,8]       [,9]     [,10]
+## [1,] -0.7648898  2.9561836 -0.2945815 0.0400422
+## [2,]  0.7374717 -0.4352261  1.7740267 1.9879367
+## [3,] -0.8745826  0.6589517  1.2595630 2.6201731
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m[,}\FunctionTok{colSums}\NormalTok{(m}\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{)}\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              [,1]       [,2]       [,3]        [,4]       [,5]        [,6]
+##  [1,] -0.29684735 -0.8764308  1.6886001 -0.92055546 -0.9675716  1.85010517
+##  [2,] -0.57834905  2.4515044 -0.1047274  2.11666010 -0.7648898  0.04004220
+##  [3,]  0.38601769  2.0248783  2.5292170  0.57910409  2.0933132  2.70956269
+##  [4,]  1.23842150 -0.4032001 -0.7541671  0.04428254  1.0330683 -0.57665274
+##  [5,]  1.97911361 -0.4104191  1.8137459  1.88808688  0.7374717  1.98793669
+##  [6,]  0.45407397 -0.8976461  2.2431413  1.50068686 -0.8745826  2.62017312
+##  [7,]  2.72897376  0.6141955  2.9666080  0.71467989  2.3475535  1.41099761
+##  [8,] -0.49905208  0.1529147 -0.7391786 -0.64347122  2.3137870  1.65812637
+##  [9,] -0.07735813 -0.7686424  0.6142805 -0.98315370  1.4849829  2.75492940
+## [10,]  0.19120691  2.1515748 -0.1525216 -0.21870451  0.3778300  0.03904666
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m[,}\FunctionTok{apply}\NormalTok{(m}\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{,}\DecValTok{2}\NormalTok{,any)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              [,1]       [,2]       [,3]        [,4]       [,5]        [,6]
+##  [1,] -0.29684735 -0.8764308  1.6886001 -0.92055546 -0.9675716  1.85010517
+##  [2,] -0.57834905  2.4515044 -0.1047274  2.11666010 -0.7648898  0.04004220
+##  [3,]  0.38601769  2.0248783  2.5292170  0.57910409  2.0933132  2.70956269
+##  [4,]  1.23842150 -0.4032001 -0.7541671  0.04428254  1.0330683 -0.57665274
+##  [5,]  1.97911361 -0.4104191  1.8137459  1.88808688  0.7374717  1.98793669
+##  [6,]  0.45407397 -0.8976461  2.2431413  1.50068686 -0.8745826  2.62017312
+##  [7,]  2.72897376  0.6141955  2.9666080  0.71467989  2.3475535  1.41099761
+##  [8,] -0.49905208  0.1529147 -0.7391786 -0.64347122  2.3137870  1.65812637
+##  [9,] -0.07735813 -0.7686424  0.6142805 -0.98315370  1.4849829  2.75492940
+## [10,]  0.19120691  2.1515748 -0.1525216 -0.21870451  0.3778300  0.03904666
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m[,}\FunctionTok{apply}\NormalTok{(m,}\DecValTok{2}\NormalTok{,min)}\SpecialCharTok{\textless{}}  \SpecialCharTok{{-}}\FloatTok{0.5}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              [,1]       [,2]       [,3]        [,4]       [,5]        [,6]
+##  [1,] -0.29684735 -0.8764308  1.6886001 -0.92055546 -0.9675716  1.85010517
+##  [2,] -0.57834905  2.4515044 -0.1047274  2.11666010 -0.7648898  0.04004220
+##  [3,]  0.38601769  2.0248783  2.5292170  0.57910409  2.0933132  2.70956269
+##  [4,]  1.23842150 -0.4032001 -0.7541671  0.04428254  1.0330683 -0.57665274
+##  [5,]  1.97911361 -0.4104191  1.8137459  1.88808688  0.7374717  1.98793669
+##  [6,]  0.45407397 -0.8976461  2.2431413  1.50068686 -0.8745826  2.62017312
+##  [7,]  2.72897376  0.6141955  2.9666080  0.71467989  2.3475535  1.41099761
+##  [8,] -0.49905208  0.1529147 -0.7391786 -0.64347122  2.3137870  1.65812637
+##  [9,] -0.07735813 -0.7686424  0.6142805 -0.98315370  1.4849829  2.75492940
+## [10,]  0.19120691  2.1515748 -0.1525216 -0.21870451  0.3778300  0.03904666
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\#\#}
+
+\FunctionTok{typeof}\NormalTok{(mtcars[,}\DecValTok{2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "double"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rownames}\NormalTok{(mtcars)[mtcars}\SpecialCharTok{$}\NormalTok{cyl}\SpecialCharTok{==}\NormalTok{mtcars[}\StringTok{\textquotesingle{}Fiat 128\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}cyl\textquotesingle{}}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "Datsun 710"     "Merc 240D"      "Merc 230"       "Fiat 128"      
+##  [5] "Honda Civic"    "Toyota Corolla" "Toyota Corona"  "Fiat X1-9"     
+##  [9] "Porsche 914-2"  "Lotus Europa"   "Volvo 142E"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{min}\NormalTok{(mtcars}\SpecialCharTok{$}\NormalTok{cyl)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c }\OtherTok{=} \FunctionTok{cor}\NormalTok{(mtcars)}
+\FunctionTok{typeof}\NormalTok{(c)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "double"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c[,}\StringTok{\textquotesingle{}mpg\textquotesingle{}}\NormalTok{]}\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\FloatTok{0.7}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb 
+## FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rownames}\NormalTok{(c)[c[}\StringTok{\textquotesingle{}mpg\textquotesingle{}}\NormalTok{,]}\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\FloatTok{0.7}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "cyl"  "disp" "hp"   "wt"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v}\OtherTok{=}\FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{,}\DecValTok{40}\NormalTok{,}\FunctionTok{sqrt}\NormalTok{(}\DecValTok{10}\NormalTok{))}
+
+\NormalTok{v[}\FunctionTok{c}\NormalTok{(F,F,T)] }\CommentTok{\# each 3rd}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 34.92588 39.78529 45.92914 41.09146 37.46454 43.44033 35.40681
+##  [8] 43.81383 38.17611 46.13714 41.45591 40.05625 38.30073 32.57450
+## [15] 39.19018 39.99843 41.10626 41.95263 41.37615 40.45526 43.00320
+## [22] 45.59684 37.76369 41.60783 38.79642 35.82681 35.83343 43.49893
+## [29] 43.07530 41.53526 37.01320 39.30155 45.40018
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v[}\FunctionTok{seq}\NormalTok{(}\DecValTok{3}\NormalTok{,}\FunctionTok{length}\NormalTok{(v),}\AttributeTok{by=}\DecValTok{3}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 34.92588 39.78529 45.92914 41.09146 37.46454 43.44033 35.40681
+##  [8] 43.81383 38.17611 46.13714 41.45591 40.05625 38.30073 32.57450
+## [15] 39.19018 39.99843 41.10626 41.95263 41.37615 40.45526 43.00320
+## [22] 45.59684 37.76369 41.60783 38.79642 35.82681 35.83343 43.49893
+## [29] 43.07530 41.53526 37.01320 39.30155 45.40018
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v[}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(v) }\SpecialCharTok{\%\%} \DecValTok{3}\SpecialCharTok{==}\DecValTok{0}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 34.92588 39.78529 45.92914 41.09146 37.46454 43.44033 35.40681
+##  [8] 43.81383 38.17611 46.13714 41.45591 40.05625 38.30073 32.57450
+## [15] 39.19018 39.99843 41.10626 41.95263 41.37615 40.45526 43.00320
+## [22] 45.59684 37.76369 41.60783 38.79642 35.82681 35.83343 43.49893
+## [29] 43.07530 41.53526 37.01320 39.30155 45.40018
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#all beside 5th}
+\NormalTok{v[}\FunctionTok{c}\NormalTok{(F,F,F,F,T)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 36.71890 45.75825 37.46454 40.73843 40.93905 46.13714 41.24616
+##  [8] 42.57954 39.19018 40.25151 33.51768 40.45526 42.29697 43.74226
+## [15] 38.79642 41.59924 42.82745 41.53526 39.91678 42.14528
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v[}\SpecialCharTok{{-}}\FunctionTok{seq}\NormalTok{(}\DecValTok{5}\NormalTok{,}\FunctionTok{length}\NormalTok{(v),}\AttributeTok{by=}\DecValTok{5}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 38.05579 36.78926 34.92588 38.56147 39.78529 40.61553 38.76948
+##  [8] 45.92914 38.66855 41.09146 42.83431 39.93484 33.74144 36.38731
+## [15] 43.44033 34.25285 35.40681 41.75900 46.61200 43.81383 39.26888
+## [22] 38.17611 34.31920 39.80128 44.82865 41.60934 41.45591 43.44162
+## [29] 40.05625 40.90832 42.88662 38.30073 38.38885 32.57450 29.57512
+## [36] 34.91263 39.14556 42.18623 39.99843 41.00568 41.10626 37.84230
+## [43] 42.00916 41.95263 42.34789 41.37615 38.38986 34.16312 44.25079
+## [50] 40.80836 43.00320 34.66313 45.59684 45.76030 39.78047 37.76369
+## [57] 38.89676 41.60783 39.39582 34.59923 40.42236 43.46280 35.82681
+## [64] 36.09624 35.83343 39.35244 41.26189 43.49893 44.58098 43.07530
+## [71] 41.52250 36.91960 36.73363 39.75134 37.01320 36.01885 39.30155
+## [78] 42.52710 43.02176 45.40018
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v[}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(v) }\SpecialCharTok{\%\%} \DecValTok{5}\SpecialCharTok{!=}\DecValTok{0}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 38.05579 36.78926 34.92588 38.56147 39.78529 40.61553 38.76948
+##  [8] 45.92914 38.66855 41.09146 42.83431 39.93484 33.74144 36.38731
+## [15] 43.44033 34.25285 35.40681 41.75900 46.61200 43.81383 39.26888
+## [22] 38.17611 34.31920 39.80128 44.82865 41.60934 41.45591 43.44162
+## [29] 40.05625 40.90832 42.88662 38.30073 38.38885 32.57450 29.57512
+## [36] 34.91263 39.14556 42.18623 39.99843 41.00568 41.10626 37.84230
+## [43] 42.00916 41.95263 42.34789 41.37615 38.38986 34.16312 44.25079
+## [50] 40.80836 43.00320 34.66313 45.59684 45.76030 39.78047 37.76369
+## [57] 38.89676 41.60783 39.39582 34.59923 40.42236 43.46280 35.82681
+## [64] 36.09624 35.83343 39.35244 41.26189 43.49893 44.58098 43.07530
+## [71] 41.52250 36.91960 36.73363 39.75134 37.01320 36.01885 39.30155
+## [78] 42.52710 43.02176 45.40018
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v[}\FunctionTok{floor}\NormalTok{(v) }\SpecialCharTok{\%\%}\DecValTok{2} \SpecialCharTok{==}\DecValTok{0}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 38.05579 36.78926 34.92588 38.56147 36.71890 40.61553 38.76948
+##  [8] 38.66855 42.83431 36.38731 34.25285 40.73843 46.61200 40.93905
+## [15] 38.17611 34.31920 46.13714 44.82865 40.05625 40.90832 42.88662
+## [22] 38.30073 42.57954 38.38885 32.57450 34.91263 42.18623 40.25151
+## [29] 42.00916 42.34789 38.38986 34.16312 40.45526 44.25079 40.80836
+## [36] 34.66313 42.29697 38.89676 34.59923 38.79642 40.42236 36.09624
+## [43] 42.82745 44.58098 36.91960 36.73363 36.01885 42.52710 42.14528
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{t }\OtherTok{=} \FunctionTok{list}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\StringTok{\textquotesingle{}a\textquotesingle{}}\NormalTok{,}\FunctionTok{list}\NormalTok{(}\StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}c\textquotesingle{}}\NormalTok{)),}\FunctionTok{list}\NormalTok{(}\StringTok{\textquotesingle{}d\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}e\textquotesingle{}}\NormalTok{))}
+\NormalTok{t[[}\DecValTok{1}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "a"
+## 
+## [[2]]
+## [[2]][[1]]
+## [1] "b"
+## 
+## [[2]][[2]]
+## [1] "c"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{t[[}\DecValTok{1}\NormalTok{]][[}\DecValTok{2}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "b"
+## 
+## [[2]]
+## [1] "c"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{t[[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] "b"
+## 
+## [[2]]
+## [1] "c"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\#\#\#\#\#\#}
+
+\NormalTok{x }\OtherTok{=} \FunctionTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.5328843
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(x}\SpecialCharTok{\textgreater{}} \FloatTok{0.5}\NormalTok{)\{}
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(x,}\StringTok{\textquotesingle{}\textgreater{}0.5\textquotesingle{}}\NormalTok{))}
+\NormalTok{\}}\ControlFlowTok{else}\NormalTok{\{}
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(x,}\StringTok{\textquotesingle{}\textless{}0.5\textquotesingle{}}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "0.532884288579226 >0.5"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(x}\SpecialCharTok{\textgreater{}}\FloatTok{0.5}\NormalTok{) }\FunctionTok{print}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.5328843
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(x}\SpecialCharTok{\textgreater{}} \FloatTok{0.5}\NormalTok{)\{}
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(x,}\StringTok{\textquotesingle{}\textgreater{}0.5\textquotesingle{}}\NormalTok{))}
+\NormalTok{\}}\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{(x}\SpecialCharTok{\textgreater{}}\DecValTok{0}\NormalTok{)\{}
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}x\textgreater{}0\textquotesingle{}}\NormalTok{,x,}\StringTok{\textquotesingle{}\textless{}0.5\textquotesingle{}}\NormalTok{))}
+\NormalTok{\}}\ControlFlowTok{else}\NormalTok{\{}\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(x,}\StringTok{\textquotesingle{}\textless{}0\textquotesingle{}}\NormalTok{))\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "0.532884288579226 >0.5"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{)\{}
+\NormalTok{  j }\OtherTok{=}\NormalTok{ i}\SpecialCharTok{\^{}}\DecValTok{2}
+  \FunctionTok{print}\NormalTok{(j)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+## [1] 4
+## [1] 9
+## [1] 16
+## [1] 25
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{))\{}
+  \FunctionTok{cat}\NormalTok{(j)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 3167
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in}\NormalTok{ letters)}
+  \FunctionTok{cat}\NormalTok{(j)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## abcdefghijklmnopqrstuvwxyz
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in}\NormalTok{ mtcars)}
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{summary}\NormalTok{(j))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   10.40   15.43   19.20   20.09   22.80   33.90 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   4.000   4.000   6.000   6.188   8.000   8.000 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    71.1   120.8   196.3   230.7   326.0   472.0 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    52.0    96.5   123.0   146.7   180.0   335.0 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   2.760   3.080   3.695   3.597   3.920   4.930 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.513   2.581   3.325   3.217   3.610   5.424 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   14.50   16.89   17.71   17.85   18.90   22.90 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.0000  0.0000  0.0000  0.4375  1.0000  1.0000 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.0000  0.0000  0.0000  0.4062  1.0000  1.0000 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   3.000   3.000   4.000   3.688   4.000   5.000 
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   1.000   2.000   2.000   2.812   4.000   8.000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(f }\ControlFlowTok{in} \FunctionTok{list}\NormalTok{(min,max,sd))\{}
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{f}\NormalTok{(mtcars}\SpecialCharTok{$}\NormalTok{cyl))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+## [1] 8
+## [1] 1.785922
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(mtcars))\{}
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{mean}\NormalTok{(mtcars[,i]))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20.09062
+## [1] 6.1875
+## [1] 230.7219
+## [1] 146.6875
+## [1] 3.596563
+## [1] 3.21725
+## [1] 17.84875
+## [1] 0.4375
+## [1] 0.40625
+## [1] 3.6875
+## [1] 2.8125
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \FunctionTok{colnames}\NormalTok{(mtcars))\{}
+  \FunctionTok{cat}\NormalTok{(i,}\StringTok{\textquotesingle{} \textquotesingle{}}\NormalTok{,}\FunctionTok{mean}\NormalTok{(mtcars[,i]),}\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## mpg   20.09062 
+## cyl   6.1875 
+## disp   230.7219 
+## hp   146.6875 
+## drat   3.596563 
+## wt   3.21725 
+## qsec   17.84875 
+## vs   0.4375 
+## am   0.40625 
+## gear   3.6875 
+## carb   2.8125
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{j }\OtherTok{=} \FunctionTok{colnames}\NormalTok{(mtcars)[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+
+
+\end{document}
