@@ -1,0 +1,24 @@
+rk1 R task 9
+h = matrix(5,ncol=120,nrow=120)
+
+func = function(h,n,p,z,a) {
+  b = dim(h)
+  b.0 = b[1]
+  b.1 = b[2]
+  for(i in c(1:b.0)){
+    for(j in c(1:b.1)){
+      k = (1 + (i - n)^2 + (j - p)^2)^a
+      o = z / k
+      h[i,j] = h[i,j] + o
+    }
+  }
+  return(h) 
+}
+
+h = func(h,n=11,p=14,z=-100,a=0.1)
+h = func(h,n=90,p=90,z=-100,a=0.1)
+h = func(h,n=55,p=16,z=-100,a=0.1)
+h = func(h,n=39,p=68,z=-100,a=0.1)
+h = func(h,n=15,p=75,z=-100,a=0.1)
+
+image(h)
