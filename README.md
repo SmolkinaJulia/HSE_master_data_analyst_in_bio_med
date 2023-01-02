@@ -36,3 +36,5 @@ Data science introduction
 Моделирование пространственной структуры протеинов
 
 Филогенетика
+
+Недостающие материалы могут лежать на : https://drive.google.com/drive/folders/1jviTBay61uIQlrxr7kWPkPBIrNCK0pwQ?usp=sharing
